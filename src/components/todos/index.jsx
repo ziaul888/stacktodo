@@ -37,7 +37,8 @@ class Todos extends Component {
             }
          ],
          isOpenTodoForm:false,
-         searchTerm:""
+         searchTerm:"",
+         view:'list'
          
      }
 
@@ -76,7 +77,36 @@ class Todos extends Component {
     this.toggleForm();
 };
 
+    handleFilter =()=>{
 
+    }
+    changeView =(event)=>{
+        this.setState({
+            view:event.target.value
+        })
+    }
+    clearSelected =()=>{
+        
+    }
+    clearCompleted =()=>{
+        
+    }
+    reset=()=>{
+        
+    }
+
+    getView=()=>{
+        return this.state.view === "list" ? (
+            <ListView todos={this.state.todos}
+            toggleComplete={this.toggleComplete}
+            toggleSelect={this.toggleSelect}/>
+        ):(
+            <TableView
+            todos={this.state.todos}
+            toggleComplete={this.toggleComplete}
+            toggleSelect={this.toggleSelect}/>
+        )
+    }
 
     render() {
         return (
@@ -86,16 +116,18 @@ class Todos extends Component {
                 term={this.state.searchTerm}
                 toggleForm={this.toggleForm}
                 handleSearch={this.handleSearch}
+                view={this.state.view}
+                changeView={this.changeView}
+                clearCompleted={this.clearCompleted}
+                clearSelected={this.clearSelected}
+                reset={this.reset}
+
                 />
                 <div>
-                <ListView todos={this.state.todos}
-                toggleComplete={this.toggleComplete}
-                toggleSelect={this.toggleSelect}/>
-                <TableView
-                todos={this.state.todos}
-                toggleComplete={this.toggleComplete}
-                toggleSelect={this.toggleSelect}/>
+
+                {this.getView()}
                 </div>
+
                 <Modal
 					isOpen={this.state.isOpenTodoForm}
 					toggle={this.toggleForm}
