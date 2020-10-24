@@ -7,7 +7,7 @@ const  RowItem=({todo,toggleComplete, toggleSelect})=>
 
     (
      <tr>
-         <td scope="row">
+         <td>
            <CustomInput
            type="checkbox"
            id={todo.id}
