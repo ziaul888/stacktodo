@@ -2,7 +2,7 @@ import React from 'react'
 import {CustomInput, Button,Table} from 'reactstrap'
 import PropTypes from 'prop-types'
 
-const  RowItem=({todo,toggleCompleate, toggleSelect})=>
+const  RowItem=({todo,toggleComplete, toggleSelect})=>
 
 
     (
@@ -20,9 +20,9 @@ const  RowItem=({todo,toggleCompleate, toggleSelect})=>
          </td>
     <td>{todo.text}</td>
      <td>
-         <Button color={todo.isComplate ? 'danger' : 'success' } onClick={()=>
-            toggleCompleate(todo.id)}>
-                {todo.isComplate ? 'compelte': 'running'}
+         <Button color={todo.isComplete ? 'danger' : 'success' } onClick={()=>
+            toggleComplete(todo.id)}>
+                {todo.isComplete ? 'completed': 'running'}
 
          </Button>
      </td>
@@ -33,11 +33,11 @@ const  RowItem=({todo,toggleCompleate, toggleSelect})=>
 RowItem.propType={
     todo:PropTypes.object.isRequired,
     toggleSelect:PropTypes.func.isRequired,
-    toggleCompleate:PropTypes.func.isRequired
+    toggleComplete:PropTypes.func.isRequired
     
     }
 
-const TableView =({todos,toggleSelect,toggleCompleate})=>(
+const TableView =({todos,toggleSelect,toggleComplete})=>(
  <Table>
      <thead>
          <tr>
@@ -53,7 +53,7 @@ const TableView =({todos,toggleSelect,toggleCompleate})=>(
                 <RowItem
                 key={todo.id}
                 todo={todo}
-                toggleCompleate={toggleCompleate}
+                toggleComplete={toggleComplete}
                 toggleSelect={toggleSelect}
                 />
                 ))
@@ -64,6 +64,6 @@ const TableView =({todos,toggleSelect,toggleCompleate})=>(
 TableView.propType={
     todos:PropTypes.object.isRequired,
     toggleSelect:PropTypes.func.isRequired,
-    toggleCompleate: PropTypes.func.isRequired}
+    toggleComplete: PropTypes.func.isRequired}
     
     export default TableView

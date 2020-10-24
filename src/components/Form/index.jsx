@@ -4,59 +4,52 @@ import { FormGroup, Form, Label, Input, Button } from 'reactstrap';
 
 class TodoForm extends Component {
 
-    state={
-       text:'',
-       descriptrtion: ""
-    }
-    hnadleChange=(event)=>{
-        this.setState({
-              [event.target.name]:event.target.value
-        })
-    }
-    hnadleSubmit=event=>{
-        event.preventDafault()
-        this.props.createTodo(this.state)
-        event.target.reset()
-        this.setState({text:'', descriptrtion:''})
-    }
-    render() {
-        return (
-            <div>
-               
-               <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <label>Enter task</label>
-                        <Input
-                        type="text"
-                        placeholder="do osme code"
-                        name="text"
-                        value={this.state.text}
-                        onChange={this.hnadleChange}
-                        />
-                    </FormGroup>
+state={
+text:'',
+description: ''
+}
+handleChange = event => {
+    this.setState({
+        [event.target.name]: event.target.value
+    });
+};
 
-                </Form>
-                <Form onSubmit={this.handleSubmit}>
-                    <FormGroup>
-                        <label>Describe TAsk</label>
-                        <Input
-                        type="textarea"
-                        placeholder="do osme code"
-                        name="descriptrtion"
-                        value={this.state.descriptrtion}
-                        onChange={this.hnadleChange}
-                        />
-                    </FormGroup>
-
-                </Form>
-            </div>
-        );
-    }
+handleSubmit = event => {
+    event.preventDefault();
+    this.props.createTodo(this.state);
+    event.target.reset();
+    this.setState({ text: '', description: '' });
+};
+render() {
+    return (
+        <Form onSubmit={this.handleSubmit}>
+            <FormGroup>
+                <Label>Enter Task</Label>
+                <Input
+                    placeholder='do some code'
+                    name='text'
+                    value={this.state.text}
+                    onChange={this.handleChange}
+                />
+            </FormGroup>
+            <FormGroup>
+                <Label>Describe Task</Label>
+                <Input
+                    type='textarea'
+                    placeholder='Write some short description about your task'
+                    name='description'
+                    value={this.state.description}
+                    onChange={this.handleChange}
+                />
+            </FormGroup>
+            <Button type='submit'>Create Task</Button>
+        </Form>
+    );
+}
 }
 
-TodoForm.propType ={
-    createTodo: PropTypes.func.isRequired
+TodoForm.propTypes ={
+createTodo: PropTypes.func.isRequired
 };
 
 export default TodoForm;
-
