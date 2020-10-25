@@ -21,7 +21,7 @@ class Todos extends Component {
              },
              {
                 id:'aewasjdrfk984red',
-                text:'main todo text',
+                text:'text',
                 time : new Date(),
                 isComplete:false,
                 isSelect:false
@@ -29,16 +29,17 @@ class Todos extends Component {
             },
             {
                 id:'aewasjdrfk084red',
-                text:'main todo text',
+                text:'new  text',
                 time : new Date(),
                 isComplete:false,
                 isSelect:false
 
             }
          ],
-         isOpenTodoForm:false,
+         isOpenTodoForm:false, 
          searchTerm:"",
-         view:'list'
+         view:'list',
+         filter:"all"
          
      }
 
@@ -58,9 +59,17 @@ class Todos extends Component {
         this.setState({todos})
 
     }
-    handleSearch=()=>{
-
+    handleSearch=(value)=>{
+    this.setState({
+        searchTerm:value
+    })
     }
+    
+    performSearch=()=>{
+      return this.state.todos.filter(todo =>todo.text.toLowerCase()
+      .includes (this.state.searchTerm.toLowerCase()))  
+    }
+     
    toggleForm=()=>{
     this.setState({
         isOpenTodoForm: !this.state.isOpenTodoForm   
@@ -77,32 +86,55 @@ class Todos extends Component {
     this.toggleForm();
 };
 
-    handleFilter =()=>{
-
+    handleFilter =filter=>{
+       this.setState({filter})
     }
+
+    performFilter = todos => {
+		const { filter } = this.state;
+		if (filter === 'completed') {
+			return todos.filter(todo => todo.isComplete);
+		} else if (filter === 'running') {
+			return todos.filter(todo => !todo.isComplete);
+		} else {
+			return todos;
+		}
+	};
+
     changeView =(event)=>{
         this.setState({
             view:event.target.value
         })
     }
     clearSelected =()=>{
-        
+        const todos =this.state.todos.filter(todo =>!todo.isSelect)
+        this.setState({todos})
     }
     clearCompleted =()=>{
-        
+        const todos =this.state.todos.filter(todo =>!todo.isComplete)
+        this.setState({todos})
     }
     reset=()=>{
-        
+        this.setState({
+            filter:"all",
+            searchTerm:"",
+            view:"list",
+            isOpenTodoForm:false
+
+        })
     }
 
     getView=()=>{
+        let todos =this.performSearch();
+        todos= this.performFilter(todos);
+        
         return this.state.view === "list" ? (
-            <ListView todos={this.state.todos}
+            <ListView todos={todos}
             toggleComplete={this.toggleComplete}
             toggleSelect={this.toggleSelect}/>
         ):(
             <TableView
-            todos={this.state.todos}
+            todos={todos}
             toggleComplete={this.toggleComplete}
             toggleSelect={this.toggleSelect}/>
         )
